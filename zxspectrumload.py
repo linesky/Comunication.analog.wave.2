@@ -71,7 +71,12 @@ def main():
     text_length = 128  # Exemplo: ajusta de acordo com o seu caso
     xxxx= binary_data[:128*8]
     text_length=(binary_to_text(xxxx)).find('\0')+1
-    text_binary = binary_data[:text_length*8+16*8]
+    text_binary = binary_data[text_length*8:text_length*8+16*8]
+   
+    
+    
+    #print(str(ii))
+    
     file_binary = binary_data[text_length*8+16*8:]
     
     # Converte o texto binário de volta para texto
@@ -80,10 +85,11 @@ def main():
     # Converte os dados binários para um arquivo binário
     output_filename = "output.bin"
     binary_to_file(file_binary, output_filename)
-    
+    ii=int(ord(text[11]))+int(ord(text[12]))*256
+    print(ii)
     # Exibe o texto e salva o arquivo binário
     print("Texto decodificado:")
-    print(text)
+    print(text[0:10])
     print(f"Arquivo binário salvo em {output_filename}")
 print("\x1bc\x1b[47;34m")
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 import numpy as np
 import wave
 import sounddevice as sd
+import os
 global names
 names=""
 def text_to_binary(text):
@@ -12,6 +13,7 @@ def file_to_binary(file_path):
     """Lê um arquivo binário e converte para uma string binária."""
     with open(file_path, 'rb') as f:
         binary_data = f.read()
+    
     binary_string = ''.join(format(byte, '08b') for byte in binary_data)
     return binary_string
 
@@ -21,9 +23,12 @@ def combine_text_and_file(texts, file_path):
     ff=""
     for a in range(127):
          ff=ff+str(chr(85))
-    bn=len(file_binary)/8
+    bn=os.stat(names.strip())
+    bn=bn.st_size
+    print(bn)
+
     ii=int(bn//256)
-    iii=int(bn-(ii*256))
+    iii=int(bn-int(ii*256))
     ff=ff+str(chr(0))+str(chr(0))+names+str(chr(iii))+str(chr(ii))+str(chr(0))+str(chr(0))+str(chr(0))
     text=ff
     text_binary = text_to_binary(text)
