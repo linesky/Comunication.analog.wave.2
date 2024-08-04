@@ -1,7 +1,8 @@
 import numpy as np
 import wave
 import sounddevice as sd
-
+global names
+names=""
 def text_to_binary(text):
     """Converte o texto em uma string binária."""
     binary_string = ''.join(format(ord(char), '08b') for char in text)
@@ -14,10 +15,18 @@ def file_to_binary(file_path):
     binary_string = ''.join(format(byte, '08b') for byte in binary_data)
     return binary_string
 
-def combine_text_and_file(text, file_path):
+def combine_text_and_file(texts, file_path):
     """Combina o texto binário com os dados binários do arquivo."""
-    text_binary = text_to_binary(text)
     file_binary = file_to_binary(file_path)
+    ff=""
+    for a in range(127):
+         ff=ff+str(chr(85))
+    ii=len(file_binary)//256
+    iii=len(file_binary)-(ii*256)
+    ff=ff+str(chr(0))+str(chr(0))+names+str(chr(ii))+str(chr(iii))+str(chr(0))+str(chr(0))+str(chr(0))
+    text=ff
+    text_binary = text_to_binary(text)
+    
     combined_binary = text_binary + file_binary
     return combined_binary
 
@@ -47,17 +56,16 @@ def save_wave_file(filename, audio_data, sample_rate):
         wf.writeframes((audio_data * 32767).astype(np.int16).tobytes())
 
 def main():
+    global names
     # Solicita o nome do arquivo binário ao usuário
     print("\x1bc\x1b[47;34m")
-    ff=""
-    for a in range(127):
-         ff=ff+str(chr(85))
-    ff=ff+str(chr(0))
-    text=ff
     file_path = input("Digite o nome do arquivo binário: ")
+    names=file_path+"            "
+    names=names[:10]
+   
 
     # Combina o texto com o arquivo binário
-    combined_binary = combine_text_and_file(text, file_path)
+    combined_binary = combine_text_and_file(names, file_path)
 
     # Gera o áudio no formato ZX Spectrum
     audio_data = generate_zx_spectrum_audio(combined_binary)

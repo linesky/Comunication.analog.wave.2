@@ -69,9 +69,10 @@ def main():
     
     # Separa o texto dos dados binários
     text_length = 128  # Exemplo: ajusta de acordo com o seu caso
-    #text_length=binary_data.find("\0")
-    text_binary = binary_data[:text_length*8]
-    file_binary = binary_data[text_length*8:]
+    xxxx= binary_data[:128*8]
+    text_length=(binary_to_text(xxxx)).find('\0')+1
+    text_binary = binary_data[:text_length*8+16*8]
+    file_binary = binary_data[text_length*8+16*8:]
     
     # Converte o texto binário de volta para texto
     text = binary_to_text(text_binary)
