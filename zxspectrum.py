@@ -21,8 +21,9 @@ def combine_text_and_file(texts, file_path):
     ff=""
     for a in range(127):
          ff=ff+str(chr(85))
-    ii=len(file_binary)//256
-    iii=len(file_binary)-(ii*256)
+    bn=len(file_binary)/8
+    ii=int(bn//256)
+    iii=int(bn-(ii*256))
     ff=ff+str(chr(0))+str(chr(0))+names+str(chr(iii))+str(chr(ii))+str(chr(0))+str(chr(0))+str(chr(0))
     text=ff
     text_binary = text_to_binary(text)
